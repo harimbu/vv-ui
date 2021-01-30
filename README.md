@@ -1,24 +1,20 @@
-# vv-ui
+# Firebase
 
-## Project setup
-```
-yarn install
-```
+## Cloud Functions로 Firebase 인증 확장
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+- 프로젝트 설정 -> 비공개 키 생성
 
-### Compiles and minifies for production
+### 사용자 생성 시 함수 트리거
 ```
-yarn build
+exports.sendWelcomeEmail = functions.auth.user().onCreate((user) => {
+  // ...
+});
 ```
 
-### Lints and fixes files
+### 사용자 생성 시 함수 트리거
 ```
-yarn lint
+exports.sendByeEmail = functions.auth.user().onDelete((user) => {
+  // ...
+});
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
