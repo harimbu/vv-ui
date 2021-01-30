@@ -33,3 +33,14 @@ firebase functions:config:set admin.email="xxx@xxx.com" admin.db_url=https://xxx
   }
 }
 ```
+### 실시간 데이터베이스 규칙
+```
+{
+  "rules": {
+    ".read": true,
+    "site": {
+      ".write": "root.child('users').child(auth.uid).child('level').val() == 0"
+    }
+  }
+}
+```

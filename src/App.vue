@@ -23,7 +23,7 @@
 
     <v-app-bar app flat class="justify-center">
       <v-app-bar-nav-icon @click='drawer = !drawer'></v-app-bar-nav-icon>
-      <v-toolbar-title class="subtitle-1 pl-2">{{ site.title }}</v-toolbar-title>
+      <Title :title="site.title" />
       <v-spacer />
       <v-toolbar-items class="hidden-xs-only">
         <v-btn text color="grey darken-2" v-for="item in site.items" :key="item.title" :to="item.to">{{ item.title }}</v-btn>
@@ -44,9 +44,12 @@
 <script>
 import Menu from '@/views/site/Menu'
 import Sign from '@/views/site/Sign'
+import Title from '@/views/site/Title'
+
 export default {
   name: 'App',
-  components: { Menu, Sign },
+  components: { Menu, Title, Sign },
+
   data () {
     return {
       drawer: null,
@@ -82,6 +85,21 @@ export default {
           }
         ]
       }
+    }
+  },
+  created () {
+    this.subscribe()
+  },
+  methods: {
+    subscribe () {
+      this.$firebase.database().ref('site').on('value', snap => {
+        const data = snap.val()
+        if (!data) {
+          this.$firebase.database().ref('site').set(this.site)
+        } else {
+          this.site = data
+        }
+      })
     }
   }
 }
