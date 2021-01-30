@@ -49,15 +49,19 @@ export default {
         { value: 'content', text: '내용' },
         { value: 'id', text: 'id' }
       ],
-      currentItem: null
+      currentItem: null,
+      unsubscribe: null
     }
   },
   created () {
     this.subscribe()
   },
+  destroyed () {
+    if (this.unsubscribe) this.unsubscribe()
+  },
   methods: {
     subscribe () {
-      this.$firebase.firestore().collection('board2').onSnapshot(snap => {
+      this.unsubscribe = this.$firebase.firestore().collection('board2').onSnapshot(snap => {
         this.items = snap.docs.map(doc => {
           const item = doc.data()
           return {

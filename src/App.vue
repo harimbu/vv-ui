@@ -21,9 +21,9 @@
       <Menu :items="site.items" />
     </v-navigation-drawer>
 
-    <v-app-bar app flat>
+    <v-app-bar app flat class="justify-center">
       <v-app-bar-nav-icon @click='drawer = !drawer'></v-app-bar-nav-icon>
-      <v-toolbar-title>{{ site.title }}</v-toolbar-title>
+      <v-toolbar-title class="subtitle-1 pl-2">{{ site.title }}</v-toolbar-title>
       <v-spacer />
       <v-toolbar-items class="hidden-xs-only">
         <v-btn text color="grey darken-2" v-for="item in site.items" :key="item.title" :to="item.to">{{ item.title }}</v-btn>
@@ -52,7 +52,7 @@ export default {
       drawer: null,
       site: {
         logo: 'https://seeklogo.com/images/Y/yarn-logo-F5E7A65FA2-seeklogo.com.png',
-        title: '뷰 & 뷰티파이',
+        title: '뷰-뷰티파이 & 파이어베이스',
         items: [
           {
             icon: 'mdi-home',
