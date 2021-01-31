@@ -9,6 +9,7 @@ admin.initializeApp({
 })
 
 const db = admin.database()
+const fdb = admin.firestore()
 
 exports.createUser = functions.auth.user().onCreate(async (user) => {
   const { uid, email, displayName, photoURL } = user
@@ -25,4 +26,16 @@ exports.createUser = functions.auth.user().onCreate(async (user) => {
 exports.removeUser = functions.auth.user().onDelete(async (user) => {
   const { uid } = user
   db.ref('users').child(uid).remove()
+})
+
+exports.incrementBoardCount = functions.firestore.document('board2/{bid}').onCreate(async (snap, context) => {
+  try {
+    await fdb.collection('meta').doc('board2').update('count', admin.firestore.FieldValue.increment(1))
+  } catch (e) {
+    await fdb.collection('meta').doc('board2').set({ count: 1 })
+  }
+})
+
+exports.decrementBoardCount = functions.firestore.document('board2/{bid}').onDelete(async (snap, context) => {
+  await fdb.collection('meta').doc('board2').update('count', admin.firestore.FieldValue.increment(-1))
 })

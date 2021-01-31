@@ -24,7 +24,7 @@ const routes = [
   },
   {
     path: '/board2',
-    component: () => import('../views/board/index2')
+    component: () => import('../views/board/board2')
   }
 ]
 
